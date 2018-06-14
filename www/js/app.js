@@ -32,6 +32,24 @@
                     templateUrl: '../js/app/main/about.html'
                 }
             }
+        })
+
+        .state('app.films', {
+            url: '/films',
+            views: {
+                'content': {
+                    templateUrl: '../js/app/films/films.html'
+                }
+            }
+        })
+
+        .state('app.film-detail', {
+            url: '/film-detail',
+            views: {
+                'content': {
+                    templateUrl: '../js/app/films/film-detail.html'
+                }
+            }
         });
 
         $urlRouterProvider.otherwise('/app/about');
