@@ -1,5 +1,5 @@
 (function() {
-    var app = angular.module('starter', ['ionic', 'starter.controllers']);
+    var app = angular.module('starter', ['ionic', 'FilmModule']);
 
     app.run(function($ionicPlatform) {
         $ionicPlatform.ready(function() {
@@ -21,8 +21,7 @@
             .state('app', {
             url: '/app',
             abstract: true,
-            templateUrl: 'js/app/menu/menu.html',
-            controller: 'AppCtrl'
+            templateUrl: 'js/app/menu/menu.html'
         })
 
         .state('app.about', {
@@ -38,7 +37,8 @@
             url: '/films',
             views: {
                 'content': {
-                    templateUrl: '../js/app/films/films.html'
+                    templateUrl: '../js/app/films/films.html',
+                    controller: 'FilmsController'
                 }
             }
         })
