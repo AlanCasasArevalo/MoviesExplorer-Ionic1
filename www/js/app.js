@@ -33,25 +33,6 @@
             }
         })
 
-        .state('app.films', {
-            url: '/films',
-            views: {
-                'content': {
-                    templateUrl: '../js/app/films/films.html',
-                    controller: 'FilmsController'
-                }
-            }
-        })
-
-        .state('app.film-detail', {
-            url: '/film-detail',
-            views: {
-                'content': {
-                    templateUrl: '../js/app/films/film-detail.html'
-                }
-            }
-        });
-
         $urlRouterProvider.otherwise('/app/about');
     });
 })();

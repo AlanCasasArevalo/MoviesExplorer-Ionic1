@@ -1,4 +1,8 @@
-angular.module('FilmModel', [])
+(function() {
+    'use strict';
+
+    angular.module('FilmModel', [])
+
     .factory('Film', function() {
 
         function Film(title, year, runtime, director, actors, plot, poster, imdbRating) {
@@ -32,5 +36,6 @@ angular.module('FilmModel', [])
         };
 
         return Film;
-
     });
+
+})();
