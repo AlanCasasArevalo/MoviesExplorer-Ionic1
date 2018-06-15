@@ -68,7 +68,41 @@
             return deferred.promise;
         };
 
-        filmsService.getAllFilms = function() {};
+        filmsService.getAllFilms = function() {
+            var deferred = $q.defer();
+
+            if (filmsService.films.length > 0) {
+                deferred.resolve(filmsService.films);
+            } else {
+
+                var numberOfDownloads = 0;
+                var someErrorOccured = false;
+                var resolveIfFinished = function(success) {
+                    numberOfDownloads++;
+                    if (!success) {
+                        someErrorOccured = true;
+                    }
+                    if (numberOfDownloads === filmNames.length) {
+                        if (!someErrorOccured) {
+                            deferred.resolve(filmsService.films);
+                        } else {
+                            deferred.reject();
+                        }
+                    }
+                };
+
+                for (var index = 0; index < filmsService.films.length; index++) {
+                    $http.get(urlFromTitle(filmNames[index], {}).then(
+                        function(response) {
+                            filmsService.films.push(Film.build(response.data));
+                            resolveIfFinished(true);
+                        },
+                        function(error) {
+                            resolveIfFinished(false);
+                        }));
+                }
+            }
+        };
 
         return filmsService;
     });
