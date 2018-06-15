@@ -18,7 +18,8 @@
         var namePlaceholder = ['namePlaceholder'];
 
         return {
-            url: 'http://www.omdbapi.com/?t=' + namePlaceholder + '&y=&plot=short&r=json',
+
+            url: 'http://www.omdbapi.com/?t=' + namePlaceholder + '&y=&plot=short&r=json&apikey=375f649e',
             namePlaceholder: namePlaceholder
         };
 
@@ -91,17 +92,22 @@
                     }
                 };
 
-                for (var index = 0; index < filmsService.films.length; index++) {
-                    $http.get(urlFromTitle(filmNames[index], {}).then(
+                for (var index = 0; index < filmNames.length; index++) {
+
+                    $http.get(urlFromTitle(filmNames[index]), {}).then(
                         function(response) {
                             filmsService.films.push(Film.build(response.data));
                             resolveIfFinished(true);
                         },
                         function(error) {
                             resolveIfFinished(false);
-                        }));
+                        });
+
                 }
             }
+
+            return deferred.promise;
+
         };
 
         return filmsService;

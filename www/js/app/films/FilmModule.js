@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    angular.module('FilmModule', ['FilmModel'])
+    angular.module('FilmModule', ['FilmModel', 'OMDBFilmsModule'])
         .config(function($stateProvider, $urlRouterProvider) {
             $stateProvider
 
@@ -10,7 +10,12 @@
                 views: {
                     'content': {
                         templateUrl: '../js/app/films/Films/films.html',
-                        controller: 'FilmsController'
+                        controller: 'FilmsController',
+                        resolve: {
+                            films: function(FilmsService) {
+                                return FilmsService.getAllFilms();
+                            }
+                        }
                     }
                 }
             })
