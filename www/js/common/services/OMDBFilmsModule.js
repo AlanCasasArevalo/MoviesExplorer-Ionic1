@@ -39,7 +39,7 @@
             return url;
         };
 
-        var selecFilmByTitle = function(title) {
+        var selectFilmByTitle = function(title) {
             for (var index = 0; index < filmsService.films.length; index++) {
                 if (filmsService.films[index].title === title) {
                     return filmsService.films[index];
@@ -53,16 +53,47 @@
             var deferred = $q.defer();
 
             if (filmsService.films.length > 0) {
-                filmsService.selectedFilm = selecFilmByTitle(title);
+                filmsService.selectedFilm = selectFilmByTitle(title);
                 deferred.resolve(filmsService.selectedFilm);
             } else {
-                $http.get(urlFromTitle(title), {}).then(function(success) {
-                    filmsService.selectedFilm = Film.build(response.data);
-                    deferred.resolve(this.filmsService.selectedFilm);
-                }, function(error) {
-                    filmsService.selectedFilm = null;
-                    deferred.resolve(null);
-                });
+                $http.get(urlFromTitle(title, {})).then(
+                    function(response) {
+                        filmsService.selectedFilm = Film.build(response.data);
+                        deferred.resolve(filmsService.selectedFilm);
+                    },
+                    function(error) {
+                        filmsService.selectedFilm = null;
+                        deferred.resolve(null);
+                    });
+            }
+
+            return deferred.promise;
+        };
+
+        var selectPositionByTitle = function(title) {
+            for (var index = 0; index < filmsService.films.length; index++) {
+                if (filmsService.films[index].title === title) {
+                    return index;
+                }
+            }
+
+            return null;
+        };
+
+        filmsService.getPositionByTitle = function(title) {
+            var deferred = $q.defer();
+
+            if (filmsService.films.length > 0) {
+                deferred.resolve(selectPositionByTitle(title));
+            } else {
+                filmsService.getAllFilms().then(
+                    function(response) {
+                        deferred.resolve(selectPositionByTitle(title));
+                    },
+                    function(error) {
+                        deferred.resolve(null);
+                    }
+                );
             }
 
             return deferred.promise;
@@ -93,7 +124,7 @@
 
                 for (var index = 0; index < filmNames.length; index++) {
 
-                    $http.get(urlFromTitle(filmNames[index]), {}).then(
+                    $http.get(urlFromTitle(filmNames[index], {})).then(
                         function(response) {
                             filmsService.films.push(Film.build(response.data));
                             resolveIfFinished(true);
