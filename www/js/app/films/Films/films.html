@@ -1,7 +1,7 @@
 <ion-view view-title="Films">
     <ion-content>
         <ion-list>
-            <ion-item ui-sref="app.film-detail" ng-repeat="film in films">{{ film.title }}</ion-item>
+            <ion-item ui-sref="app.film-detail({filmTitle:'{{film.title}}'})" ng-repeat="film in films">{{ film.title }}</ion-item>
         </ion-list>
     </ion-content>
 </ion-view>

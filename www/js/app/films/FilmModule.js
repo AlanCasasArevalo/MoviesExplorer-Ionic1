@@ -21,11 +21,16 @@
             })
 
             .state('app.film-detail', {
-                url: '/film-detail',
+                url: '/films/film-detail/:filmTitle',
                 views: {
                     'content': {
                         templateUrl: '../js/app/films/FilmDetail/film-detail.html',
-                        controller: 'FilmDetailController'
+                        controller: 'FilmDetailController',
+                        resolve: {
+                            film: function(FilmsService, $stateParams) {
+                                return FilmsService.getSpecificFilm($stateParams.filmTitle);
+                            }
+                        }
                     }
                 }
             });

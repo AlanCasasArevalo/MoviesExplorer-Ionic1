@@ -40,7 +40,7 @@
         };
 
         var selecFilmByTitle = function(title) {
-            for (var index = 0; index < filmsService.length; index++) {
+            for (var index = 0; index < filmsService.films.length; index++) {
                 if (filmsService.films[index].title === title) {
                     return filmsService.films[index];
                 }
@@ -52,10 +52,9 @@
         filmsService.getSpecificFilm = function(title) {
             var deferred = $q.defer();
 
-
             if (filmsService.films.length > 0) {
                 filmsService.selectedFilm = selecFilmByTitle(title);
-                deferred.resolve(this.filmsService.selectedFilm);
+                deferred.resolve(filmsService.selectedFilm);
             } else {
                 $http.get(urlFromTitle(title), {}).then(function(success) {
                     filmsService.selectedFilm = Film.build(response.data);
