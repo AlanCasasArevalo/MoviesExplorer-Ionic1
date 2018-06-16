@@ -27,8 +27,8 @@
                         templateUrl: '../js/app/films/FilmDetail/film-detail.html',
                         controller: 'FilmDetailController',
                         resolve: {
-                            film: function(FilmsService, $stateParams) {
-                                return FilmsService.getSpecificFilm($stateParams.filmTitle);
+                            currentFilmIndex: function(FilmsService, $stateParams) {
+                                return FilmsService.getPositionByTitle($stateParams.filmTitle);
                             }
                         }
                     }
