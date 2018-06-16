@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    angular.module('OMDBFilmsModule', ['FilmModel'])
+    angular.module('OMDBFilmsModule', ['FilmModel', 'StorageModule'])
 
     .constant('filmNames', [
         'the Martian',
@@ -15,7 +15,7 @@
     ])
 
     .constant('omdbAPi', (function() {
-        var namePlaceholder = ['namePlaceholder'];
+        var namePlaceholder = '[namePlaceholder]';
 
         return {
 
@@ -25,13 +25,19 @@
 
     })())
 
-    .factory('FilmsService', function($http, $q, Film, filmNames, omdbAPi) {
+    .factory('FilmsService', function($http, $q, Film, filmNames, omdbAPi, storageService) {
 
         var filmsService = {};
 
         filmsService.films = [];
 
         filmsService.selectedFilm = null;
+
+        var storedItems = storageService.getItem("films");
+
+        if (storedItems) {
+            filmsService.films = Film.fromJsonBunch(storedItems);
+        }
 
         var urlFromTitle = function(title) {
             var titleQueryString = title.split(' ').join('+');
@@ -114,6 +120,9 @@
                         someErrorOccured = true;
                     }
                     if (numberOfDownloads === filmNames.length) {
+
+                        storageService.setItem("films", filmsService.films);
+
                         if (!someErrorOccured) {
                             deferred.resolve(filmsService.films);
                         } else {
