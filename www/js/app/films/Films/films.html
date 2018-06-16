@@ -2,12 +2,12 @@
     <ion-content>
         <ion-list>
             <ion-item class="item-thumbnail-left" ui-sref="app.film-detail({filmTitle:'{{film.title}}'})" ng-repeat="film in films">
-                <img style="background-image: url({{ film.poster }})">
-                <div class="cellInfo">
+                <img safe-bg-src="{{ film.poster }}">
+                <div class="cellInfo ">
                     <h2>{{ film.title }}</h2>
                     <h2>{{ film.director }} - {{ film.year }} </h2>
                 </div>
-                <p class="rating"> Rating: {{ film.imdbRating }} </p>
+                <p class="rating "> Rating: {{ film.imdbRating }} </p>
             </ion-item>
         </ion-list>
     </ion-content>

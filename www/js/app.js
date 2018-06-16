@@ -1,5 +1,5 @@
 (function() {
-    var app = angular.module('starter', ['ionic', 'FilmModule']);
+    var app = angular.module('starter', ['ionic', 'FilmModule', 'UtilsModule']);
 
     app.run(function($ionicPlatform) {
         $ionicPlatform.ready(function() {

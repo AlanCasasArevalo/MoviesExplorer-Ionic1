@@ -12,7 +12,6 @@
             $scope.currentFilmPage = currentFilmIndex;
         };
 
-
         var setupSlider = function() {
             $scope.data.sliderOptions = {
                 initialSlide: currentFilmIndex,
